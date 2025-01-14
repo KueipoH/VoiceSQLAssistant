@@ -94,6 +94,35 @@ project-root/
 
 ---
 
+### 🔧 Finding Your `device_index`
+
+To ensure the `AudioRecorder` works correctly with your microphone, you need to identify the `device_index` corresponding to your audio input device. Follow these steps:
+
+1. Open a Python shell and run the following code:
+   ```python
+   import pyaudio
+   
+   p = pyaudio.PyAudio()
+   for i in range(p.get_device_count()):
+       info = p.get_device_info_by_index(i)
+       print(f"Index: {i}, Name: {info['name']}")
+   p.terminate()
+   ```
+
+2. Review the output to find the index number (`Index: X`) of your desired audio input device. Note the name of the device to ensure you select the correct one.
+
+3. Update the `device_index` in your `main.py` file:
+   ```python
+   recorder = AudioRecorder(
+       device_index=X,  # Replace X with the identified index
+       channels=2,
+       rate=48000,
+       chunk=512,
+       format_type=pyaudio.paInt16,
+   )
+   ```
+---
+
 ## 📊 Performance Insights
 
 WhisperSQL provides detailed timing for each interaction step:
