@@ -26,7 +26,7 @@ WhisperSQL is an interactive tool that combines OpenAI's Whisper and LangChain t
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/VoiceSQLAssistant.git
+   git clone https://github.com/KueipoH/VoiceSQLAssistant.git
    cd VoiceSQLAssistant
    ```
 
