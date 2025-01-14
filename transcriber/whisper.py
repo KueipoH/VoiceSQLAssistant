@@ -6,8 +6,8 @@ logger = setup_logger(__name__)
 
 def transcribe_audio(client: OpenAI, audio_file_path: str):
     """
-    使用 OpenAI Whisper 模型進行語音轉錄。
-    您需在環境變數中設置 OPENAI_API_KEY 或自行在 client 中指定 api_key。
+    Transcribes audio using the OpenAI Whisper model.
+    You need to set the OPENAI_API_KEY in environment variables or specify the api_key in the client.
     """
     try:
         with open(audio_file_path, "rb") as audio_file:
@@ -17,6 +17,6 @@ def transcribe_audio(client: OpenAI, audio_file_path: str):
             )
         return transcript.text
     except Exception as e:
-        logger.error(f"音頻轉錄出錯：{str(e)}")
+        logger.error(f"Error transcribing audio: {str(e)}")
         return None
 
