@@ -6,14 +6,14 @@ logger = setup_logger(__name__)
 
 def create_db_connection(username, password, host, database):
     """
-    使用 mysql-connector 創建數據庫連接，並透過 SQLDatabase (LangChain) 進行管理。
+    Creates a database connection using mysql-connector and manages it through SQLDatabase (LangChain).
     """
     try:
         db_uri = f"mysql+mysqlconnector://{username}:{password}@{host}/{database}"
         db = SQLDatabase.from_uri(db_uri)
-        logger.info("數據庫連接創建成功！")
+        logger.info("Database connection created successfully!")
         return db
     except Exception as e:
-        logger.error(f"創建數據庫連接時出錯：{str(e)}")
+        logger.error(f"Error creating database connection: {str(e)}")
         raise
 

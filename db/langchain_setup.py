@@ -8,18 +8,18 @@ from utils.logger import setup_logger
 logger = setup_logger(__name__)
 
 def setup_langchain(db):
-    """建立 LangChain 組件，用於將 SQL 查詢與 GPT 模型結合。"""
+    """Sets up LangChain components to integrate SQL queries with GPT models."""
     try:
         prompt = PromptTemplate.from_template(
             """
-            根據以下 SQL 表結構，請幫我用SQL語句回答問題:
+            Based on the following SQL table structure, please answer the question using SQL statements:
             {schema}
             Question: {question}
-            SQL Query: 讓我們一步一步思考:
-            1) 我們需要從哪些表格獲取數據
-            2) 我們需要哪些條件
-            3) 如何組織和格式化結果
-            僅需要輸出 SQL 查詢語句，不需要其他解釋：
+            SQL Query: Let's think step by step:
+            1) Which tables do we need to retrieve data from?
+            2) What conditions do we need?
+            3) How to organize and format the results?
+            Only output the SQL query statement, no additional explanations:
             """
         )
 
@@ -37,6 +37,6 @@ def setup_langchain(db):
         return chain
 
     except Exception as e:
-        logger.error(f"設置 LangChain 時出錯：{str(e)}")
+        logger.error(f"Error setting up LangChain: {str(e)}")
         raise
 
