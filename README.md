@@ -63,10 +63,17 @@ WhisperSQL is an interactive tool that combines OpenAI's Whisper and LangChain t
    - Confirm SQL query generation and execution.
 
 3. Example workflow:
-   - Say: "Show me the top 10 sales from the orders table."
-   - VoiceSQLAssistant will:
+   - Say: "Show me the top 10 sales from the orders table and the customer names associated with those sales."
+   - WhisperSQL will:
      - Transcribe your command.
-     - Generate the SQL query: `SELECT * FROM orders ORDER BY sales DESC LIMIT 10;`
+     - Generate the SQL query:
+       ```sql
+       SELECT orders.sales, customers.name 
+       FROM orders 
+       JOIN customers ON orders.customer_id = customers.id 
+       ORDER BY orders.sales DESC 
+       LIMIT 10;
+       ```
      - Execute the query and display results.
 
 
