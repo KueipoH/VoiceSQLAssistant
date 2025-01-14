@@ -1,4 +1,3 @@
-# audio/recorder.py
 import threading
 import wave
 import pyaudio
@@ -26,26 +25,26 @@ class AudioRecorder:
         self.audio_thread = None
 
     def start_recording(self):
-        """開始錄音"""
+        """Start recording"""
         try:
             self.recording = True
             self.frames = []
             self.audio_thread = threading.Thread(target=self._record_audio)
             self.audio_thread.start()
-            logger.info("開始錄音")
+            logger.info("Recording started")
         except Exception as e:
-            logger.error(f"啟動錄音失敗: {str(e)}")
+            logger.error(f"Failed to start recording: {str(e)}")
             raise
 
     def stop_recording(self):
-        """停止錄音"""
+        """Stop recording"""
         self.recording = False
         if self.audio_thread:
             self.audio_thread.join()
-        logger.info("停止錄音")
+        logger.info("Recording stopped")
 
     def _record_audio(self):
-        """錄音子執行緒：連續讀取音訊並寫入 self.frames"""
+        """Recording thread: Continuously read audio and append to self.frames"""
         p = pyaudio.PyAudio()
         stream = None
         try:
@@ -57,27 +56,27 @@ class AudioRecorder:
                 input_device_index=self.device_index,
                 frames_per_buffer=self.CHUNK,
             )
-            logger.info(f"音頻流已開啟，裝置索引: {self.device_index}")
+            logger.info(f"Audio stream opened, device index: {self.device_index}")
 
             while self.recording:
                 data = stream.read(self.CHUNK, exception_on_overflow=False)
                 self.frames.append(data)
 
         except Exception as e:
-            logger.error(f"錄音過程出錯: {str(e)}")
+            logger.error(f"Error during recording: {str(e)}")
         finally:
             if stream is not None:
                 try:
                     stream.stop_stream()
                     stream.close()
                 except Exception as e:
-                    logger.error(f"關閉音頻流時出錯: {str(e)}")
+                    logger.error(f"Error closing audio stream: {str(e)}")
             p.terminate()
 
     def save_recording(self, filename="temp_recording.wav"):
-        """保存錄音至 .wav 檔案"""
+        """Save recording to a .wav file"""
         if not self.frames:
-            logger.warning("沒有錄音數據")
+            logger.warning("No recording data available")
             return None
 
         try:
@@ -90,9 +89,9 @@ class AudioRecorder:
             wf.close()
             p.terminate()
 
-            logger.info(f"錄音已保存到: {filename}")
+            logger.info(f"Recording saved to: {filename}")
             return filename
         except Exception as e:
-            logger.error(f"保存錄音時出錯: {str(e)}")
+            logger.error(f"Error saving recording: {str(e)}")
             return None
 
